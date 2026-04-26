@@ -12,7 +12,6 @@ Logi Options+ plugin for MX Creative Console that shows Spotify album art plus t
 ## Build
 
 ```bash
-cd /Users/swadkar/personal/ctrlcenter/SpotifyNowPlaying
 dotnet build
 ```
 
@@ -28,4 +27,3 @@ Then in Logi Options+:
 2. Go to `Installed Plugins`
 3. Add `Spotify Now Playing`
 4. Assign `Now Playing`
-
