@@ -8,6 +8,7 @@ namespace Loupedeck.SpotifyNowPlaying
         private static readonly BitmapColor Secondary = new(168, 168, 168);
         private static readonly BitmapColor Primary = new(255, 255, 255);
         private static readonly BitmapColor SpotifyGreen = new(29, 185, 84);
+        private static readonly BitmapColor SpotifyGreenMuted = new(48, 232, 114);
         private static readonly BitmapColor Overlay = new(0, 0, 0, 160);
         private static readonly BitmapColor ProgressBack = new(60, 60, 60);
         private static readonly BitmapColor SoftPanel = new(26, 26, 26);
@@ -78,6 +79,25 @@ namespace Loupedeck.SpotifyNowPlaying
             builder.DrawText(snapshot.DurationText, 18, 39, width - 36, 11, Secondary, 10, 10, 0, null);
             builder.FillRectangle(18, height - 23, width - 36, 6, SoftPanel2);
             builder.FillRectangle(18, height - 23, Math.Max(2, (Int32)Math.Round((width - 36) * snapshot.ProgressRatio)), 6, SpotifyGreen);
+            return builder.ToImage();
+        }
+
+        public static BitmapImage RenderVolumeTile(SpotifySnapshot snapshot, PluginImageSize imageSize)
+        {
+            using var builder = new BitmapBuilder(imageSize);
+            builder.Clear(Background);
+
+            var width = builder.Width;
+            var height = builder.Height;
+            builder.FillRectangle(14, 14, width - 28, height - 28, SoftPanel);
+
+            if (!snapshot.HasTrackData && String.Equals(snapshot.StatusDetail, "Closed", StringComparison.OrdinalIgnoreCase))
+            {
+                builder.DrawText("Closed", 14, 46, width - 28, 14, Secondary, 12, 12, 0, null);
+                return builder.ToImage();
+            }
+
+            builder.DrawText($"{snapshot.SoundVolume}%", 10, 38, width - 20, 24, SpotifyGreenMuted, 28, 28, 0, null);
             return builder.ToImage();
         }
 

@@ -6,7 +6,7 @@ namespace Loupedeck.SpotifyNowPlaying
     internal static class SpotifyStateCache
     {
         private static readonly Object Sync = new();
-        private static readonly Timer RefreshTimer = new(2000) { AutoReset = true };
+        private static readonly Timer RefreshTimer = new(250) { AutoReset = true };
         private static SpotifySnapshot _current = SpotifySnapshot.State("Spotify", "Loading");
         private static Boolean _started;
 
@@ -75,6 +75,6 @@ namespace Loupedeck.SpotifyNowPlaying
         }
 
         private static String CreateSnapshotKey(SpotifySnapshot snapshot) =>
-            $"{snapshot.TrackKey}|{snapshot.ProgressBucket}|{snapshot.DurationSeconds:0}|{snapshot.StatusTitle}|{snapshot.StatusDetail}|{snapshot.IsPlaying}";
+            $"{snapshot.TrackKey}|{snapshot.ProgressBucket}|{snapshot.DurationSeconds:0}|{snapshot.SoundVolume}|{snapshot.StatusTitle}|{snapshot.StatusDetail}|{snapshot.IsPlaying}";
     }
 }

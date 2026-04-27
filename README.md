@@ -1,10 +1,11 @@
 # Spotify Now Playing
 
-Logi Options+ plugin for MX Creative Console that shows Spotify album art plus the current song title.
+Logi Options+ plugin for MX Creative Console that shows Spotify album art, the current song title, and the current Spotify volume.
 
 ## Features
 
-- Single `Now Playing` action under the `Spotify` group
+- `Now Playing` action under the `Spotify` group
+- `Volume` action under the `Spotify` group
 - Reads Spotify on macOS through `osascript`
 - Uses album art for the key image
 - Scrolls long song titles in the caption area

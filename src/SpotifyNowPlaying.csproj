@@ -28,6 +28,9 @@
     <Reference Include="PluginApi">
       <HintPath>$(PluginApiDir)PluginApi.dll</HintPath>
     </Reference>
+    <Reference Include="SkiaSharp">
+      <HintPath>$(PluginApiDir)SkiaSharp.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <Target Name="CopyPackage" AfterTargets="PostBuildEvent">

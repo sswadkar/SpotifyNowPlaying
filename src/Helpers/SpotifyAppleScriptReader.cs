@@ -95,6 +95,7 @@ namespace Loupedeck.SpotifyNowPlaying
                         ArtworkUrl = payload.ArtworkUrl ?? String.Empty,
                         DurationSeconds = Math.Max(0, payload.DurationSeconds),
                         PositionSeconds = Math.Max(0, payload.PositionSeconds),
+                        SoundVolume = GetSpotifySoundVolume(),
                         IsPlaying = payload.IsPlaying,
                         StatusTitle = payload.StatusTitle ?? "Spotify",
                         StatusDetail = payload.StatusDetail ?? (payload.IsPlaying ? "Playing" : "Paused"),
@@ -129,6 +130,40 @@ namespace Loupedeck.SpotifyNowPlaying
             public String StatusTitle { get; set; }
 
             public String StatusDetail { get; set; }
+        }
+
+        private static Int32 GetSpotifySoundVolume()
+        {
+            var startInfo = new ProcessStartInfo
+            {
+                FileName = "/usr/bin/osascript",
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                UseShellExecute = false,
+            };
+
+            startInfo.ArgumentList.Add("-e");
+            startInfo.ArgumentList.Add("tell application \"Spotify\" to get sound volume");
+
+            using var process = Process.Start(startInfo);
+            if (process == null)
+            {
+                return 0;
+            }
+
+            var output = process.StandardOutput.ReadToEnd().Trim();
+            var error = process.StandardError.ReadToEnd().Trim();
+            process.WaitForExit();
+
+            if (process.ExitCode != 0)
+            {
+                PluginLog.Warning($"Failed to read Spotify sound volume: {error}");
+                return 0;
+            }
+
+            return Int32.TryParse(output, out var volume)
+                ? Math.Clamp(volume, 0, 100)
+                : 0;
         }
     }
 }

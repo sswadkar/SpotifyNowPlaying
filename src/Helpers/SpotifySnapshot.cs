@@ -23,6 +23,8 @@ namespace Loupedeck.SpotifyNowPlaying
 
         public Boolean IsPlaying { get; init; }
 
+        public Int32 SoundVolume { get; init; }
+
         public String StatusTitle { get; init; } = "Spotify";
 
         public String StatusDetail { get; init; } = "Closed";
